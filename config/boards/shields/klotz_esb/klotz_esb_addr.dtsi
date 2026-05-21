@@ -1,0 +1,13 @@
+/*
+ * ESB split addresses for Klotz ESB.
+ * These are different from roBaesb to avoid interference.
+ */
+
+/ {
+    esb_split {
+        compatible = "zmk,esb-split";
+        base-addr-0 = <0xAB 0xCD 0xEF 0x01>;
+        base-addr-1 = <0x23 0x45 0x67 0x89>;
+        addr-prefix = <0xFE 0xDC 0xBA 0x98 0x76 0x54 0x32 0x10>;
+    };
+};

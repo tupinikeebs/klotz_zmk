@@ -1,0 +1,13 @@
+file_format: "1"
+id: klotz_esb
+name: Klotz ESB
+type: shield
+url: https://github.com/charlesmst/klotz_zmk
+requires: [pro_micro]
+features:
+  - keys
+  - encoder
+siblings:
+  - klotz_esb
+  - klotz_esb_left
+  - klotz_esb_right

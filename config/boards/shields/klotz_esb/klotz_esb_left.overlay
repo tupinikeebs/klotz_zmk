@@ -1,0 +1,29 @@
+#include "../klotz/klotz.dtsi"
+#include "klotz_esb_addr.dtsi"
+
+/ {
+    chosen {
+        zephyr,console = &snippet_zmk_usb_logging_uart;
+        zephyr,shell-uart = &snippet_zmk_usb_logging_uart;
+    };
+};
+
+&zephyr_udc0 {
+    snippet_zmk_usb_logging_uart: snippet_zmk_usb_logging_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+&kscan0 {
+    col-gpios
+        = <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 10 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&left_encoder {
+    status = "okay";
+};

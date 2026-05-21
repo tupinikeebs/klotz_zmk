@@ -2,10 +2,31 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: nrfconnect
+      url-base: https://github.com/nrfconnect
+    - name: charlesmst
+      url-base: https://github.com/charlesmst
+
   projects:
     - name: zmk
-      remote: zmkfirmware
-      revision: v0.2
+      remote: charlesmst
+      revision: deskhop-sync-feature-report-v030
       import: app/west.yml
+
+    - name: zmk-feature-split-esb
+      remote: charlesmst
+      revision: feature/key-state-bitmap
+
+    - name: sdk-nrf
+      remote: nrfconnect
+      revision: v2.6.4
+      path: nrf
+
+    - name: nrfxlib
+      remote: nrfconnect
+      revision: v2.6.4
+      repo-path: sdk-nrfxlib
+      path: nrfxlib
+
   self:
     path: config
