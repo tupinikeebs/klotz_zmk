@@ -9,8 +9,8 @@ manifest:
 
   projects:
     - name: zmk
-      remote: charlesmst
-      revision: deskhop-sync-feature-report-v030
+      remote: zmkfirmware
+      revision: v0.3.0
       import: app/west.yml
 
     - name: zmk-feature-split-esb
