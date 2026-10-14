@@ -1,4 +1,4 @@
-if SHIELD_KLOTZ_LEFT
+if SHIELD_KLOTZ_RIGHT
 
     config ZMK_KEYBOARD_NAME
         default "KLOTZ"
@@ -6,7 +6,7 @@ if SHIELD_KLOTZ_LEFT
     config ZMK_SPLIT_ROLE_CENTRAL
         default y
 
-endif # LEFT
+endif # RIGHT
 
 
 
