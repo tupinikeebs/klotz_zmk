@@ -10,108 +10,108 @@
 extern "C" {
 #endif
 
-/* Адрес I2C TPS43 */
+/* TPS43 I2C address */
 #define TPS43_I2C_ADDR              0x74
 
-/* Определения регистров контроллера TPS43 с IQS572 - На основе даташита IQS5xx-B000 */
+/* TPS43 controller register definitions with IQS572 - Based on the IQS5xx-B000 datasheet */
 /* https://www.azoteq.com/images/stories/pdf/iqs5xx-b000_trackpad_datasheet.pdf */
 
-/* События жестов */
-// Только чтение
-#define TPS43_REG_GESTURE_EVENTS_0  0x000D  /* 1 байт */
-#define TPS43_REG_GESTURE_EVENTS_1  0x000E  /* 1 байт */
+/* Gesture events */
+// Read-only
+#define TPS43_REG_GESTURE_EVENTS_0  0x000D  /* 1 byte */
+#define TPS43_REG_GESTURE_EVENTS_1  0x000E  /* 1 byte */
 
-/* Системная информация */
-// Только чтение
-#define TPS43_REG_SYSTEM_INFO_0     0x000F  /* 1 байт - Флаги состояния */
-#define TPS43_REG_SYSTEM_INFO_1     0x0010  /* 1 байт - Флаги состояния */
-
-
-/* Управление и конфигурация системы */
-// Чтение-запись
-#define TPS43_REG_SYSTEM_CONTROL_0  0x0431  /* 1 байт - Основное управление (ACK_RESET, AUTO_ATI) */
-#define TPS43_REG_SYSTEM_CONTROL_1  0x0432  /* 1 байт - Управление режимом событий */
-// Чтение-запись
-#define TPS43_REG_ATI_TARGET        0x056D  /* 2 байта - целевое значение ATI (усиление); выше = чувствительнее (компенсация оверлея/стекла) */
-#define TPS43_REG_SYSTEM_CONFIG_0   0x058E  /* 1 байт - Конфигурация системы */
-#define TPS43_REG_SYSTEM_CONFIG_1   0x058F  /* 1 байт - Дополнительная конфигурация */
-
-/* Данные касания - основные координаты */
-// Только чтение
-#define TPS43_REG_NUM_FINGERS       0x0011  /* 1 байт */
-#define TPS43_REG_REL_X             0x0012  /* 2 байта - относительное движение по X */
-#define TPS43_REG_REL_Y             0x0014  /* 2 байта - относительное движение по Y */
-#define TPS43_REG_ABS_X             0x0016  /* 2 байта - абсолютная позиция X */
-#define TPS43_REG_ABS_Y             0x0018  /* 2 байта - абсолютная позиция Y */
-#define TPS43_REG_TOUCH_STRENGTH    0x001A  /* 2 байта */
-#define TPS43_REG_TOUCH_AREA        0x001C  /* 1 байт */
-
-/* Конфигурация XY */
-// Чтение-запись
-#define TPS43_REG_XY_CONFIG_0       0x0669  /* 1 байт */
-
-/* Конфигурация жестов */
-// Чтение-запись // Низкоуровневая конфигурация жестов // наверное стоит убрать
-#define TPS43_REG_SINGLE_FINGER_GESTURES 0x06B7  /* 1 байт */
-#define TPS43_REG_MULTI_FINGER_GESTURES  0x06B8  /* 1 байт */
-#define TPS43_REG_TAP_TIME               0x06B9  /* 2 байта, ms */
-#define TPS43_REG_HOLD_TIME              0x06BD  /* 2 байта, ms - press&hold срабатывает через TapTime+HoldTime */
-#define TPS43_REG_SCROLL_INIT_DIST       0x06C8  /* 2 байта, px - порог начала скролла (меньше = отзывчивее) */
+/* System information */
+// Read-only
+#define TPS43_REG_SYSTEM_INFO_0     0x000F  /* 1 byte - Status flags */
+#define TPS43_REG_SYSTEM_INFO_1     0x0010  /* 1 byte - Status flags */
 
 
-/* Максимальное число одновременных касаний (см. 5.3). Если сенсор видит больше,
- * ставится флаг TOO_MANY_FINGERS и XY-данные обнуляются. По умолчанию низкое
- * (~2), поэтому для 3-пальцевых жестов его нужно поднять до >=3. */
-#define TPS43_REG_MAX_MULTITOUCH    0x066A  /* 1 байт */
+/* System control and configuration */
+// Read-write
+#define TPS43_REG_SYSTEM_CONTROL_0  0x0431  /* 1 byte - Main control (ACK_RESET, AUTO_ATI) */
+#define TPS43_REG_SYSTEM_CONTROL_1  0x0432  /* 1 byte - Event mode control */
+// Read-write
+#define TPS43_REG_ATI_TARGET        0x056D  /* 2 bytes - ATI target value (gain); higher = more sensitive (overlay/glass compensation) */
+#define TPS43_REG_SYSTEM_CONFIG_0   0x058E  /* 1 byte - System configuration */
+#define TPS43_REG_SYSTEM_CONFIG_1   0x058F  /* 1 byte - Additional configuration */
 
-/* Настройки фильтра */
-// Чтение-запись
-#define TPS43_REG_FILTER_SETTINGS   0x0632  /* 1 байт */
+/* Touch data - main coordinates */
+// Read-only
+#define TPS43_REG_NUM_FINGERS       0x0011  /* 1 byte */
+#define TPS43_REG_REL_X             0x0012  /* 2 bytes - Relative movement along X */
+#define TPS43_REG_REL_Y             0x0014  /* 2 bytes - Relative movement along Y */
+#define TPS43_REG_ABS_X             0x0016  /* 2 bytes - Absolute position X */
+#define TPS43_REG_ABS_Y             0x0018  /* 2 bytes - Absolute position Y */
+#define TPS43_REG_TOUCH_STRENGTH    0x001A  /* 2 bytes */
+#define TPS43_REG_TOUCH_AREA        0x001C  /* 1 byte */
+
+/* XY configuration */
+// Read-write
+#define TPS43_REG_XY_CONFIG_0       0x0669  /* 1 byte */
+
+/* Gesture configuration */
+// Read-write // Low-level gesture configuration // probably should be removed
+#define TPS43_REG_SINGLE_FINGER_GESTURES 0x06B7  /* 1 byte */
+#define TPS43_REG_MULTI_FINGER_GESTURES  0x06B8  /* 1 byte */
+#define TPS43_REG_TAP_TIME               0x06B9  /* 2 bytes, ms */
+#define TPS43_REG_HOLD_TIME              0x06BD  /* 2 bytes, ms - press&hold triggers after TapTime+HoldTime */
+#define TPS43_REG_SCROLL_INIT_DIST       0x06C8  /* 2 bytes, px - scroll initiation threshold (lower = more responsive) */
 
 
-/* ============================================================ */
-/* Системная информация 0 (0x000F) - Флаги состояния - 8 бит */
-/* ============================================================ */
+/* Maximum number of simultaneous touches (see 5.3). If the sensor sees more,
+ * the TOO_MANY_FINGERS flag is set and XY data is zeroed out. Low by default
+ * (~2), so for 3-finger gestures it needs to be raised to >=3. */
+#define TPS43_REG_MAX_MULTITOUCH    0x066A  /* 1 byte */
 
-#define TPS43_SHOW_RESET            BIT(0)      /* Проверка флага при сбросе системы */
-
-/* ============================================================ */
-/* Системная информация 1 (0x0010) - Флаги состояния - 8 бит */
-/* ============================================================ */
-
-#define TPS43_SWITCH_STATE          BIT(5)      /* Состояние пина SW_IN */
-#define TPS43_SNAP_TOGGLE           BIT(4)      /* Переключение канала Snap */
-#define TPS43_RR_MISSED             BIT(3)      /* Пропущена частота отчетов */
-#define TPS43_TOO_MANY_FINGERS      BIT(2)      /* Превышено максимальное количество точек касания */
-#define TPS43_PALM_DETECT           BIT(1)      /* Обнаружена ладонь */
-#define TPS43_TP_MOVEMENT           BIT(0)      /* Движение тачпада */
+/* Filter settings */
+// Read-write
+#define TPS43_REG_FILTER_SETTINGS   0x0632  /* 1 byte */
 
 
 /* ============================================================ */
-/* Управление системой 0 (0x0431) - 8 бит */
+/* System Information 0 (0x000F) - Status Flags - 8 bits        */
 /* ============================================================ */
 
-#define TPS43_ACK_RESET             BIT(7)      /* Подтверждение сброса */
-#define TPS43_AUTO_ATI              BIT(5)      /* Запуск алгоритма ATI (перетюнинг усиления) */
+#define TPS43_SHOW_RESET            BIT(0)      /* Check flag upon system reset */
 
 /* ============================================================ */
-/* Управление системой 1 (0x0432) - 8 бит */
+/* System Information 1 (0x0010) - Status Flags - 8 bits        */
+/* ============================================================ */
+
+#define TPS43_SWITCH_STATE          BIT(5)      /* SW_IN pin state */
+#define TPS43_SNAP_TOGGLE           BIT(4)      /* Snap channel toggle */
+#define TPS43_RR_MISSED             BIT(3)      /* Report rate missed */
+#define TPS43_TOO_MANY_FINGERS      BIT(2)      /* Maximum touch point count exceeded */
+#define TPS43_PALM_DETECT           BIT(1)      /* Palm detected */
+#define TPS43_TP_MOVEMENT           BIT(0)      /* Trackpad movement */
+
+
+/* ============================================================ */
+/* System Control 0 (0x0431) - 8 bits                           */
+/* ============================================================ */
+
+#define TPS43_ACK_RESET             BIT(7)      /* Acknowledge reset */
+#define TPS43_AUTO_ATI              BIT(5)      /* Run ATI algorithm (re-tune gain) */
+
+/* ============================================================ */
+/* System Control 1 (0x0432) - 8 bits                           */
 /* ============================================================ */
 
 #define TPS43_RESET                 BIT(1)
-#define TPS43_SUSPEND               BIT(0)      /* Режим сна */
+#define TPS43_SUSPEND               BIT(0)      /* Sleep mode */
 
 
 /* ============================================================ */
-/* Конфигурация системы 0 (0x058E) - 8 бит */
+/* System Configuration 0 (0x058E) - 8 bits                     */
 /* ============================================================ */
 
-#define TPS43_SETUP_COMPLETE        BIT(6)      /* Флаг завершения настройки */
-#define TPS43_WDT_ENABLE            BIT(5)      /* Включение таймера сторожевого пса */
+#define TPS43_SETUP_COMPLETE        BIT(6)      /* Setup complete flag */
+#define TPS43_WDT_ENABLE            BIT(5)      /* Enable watchdog timer */
 
 
 /* ============================================================ */
-/* Конфигурация системы 1 (0x058F) - 8 бит */
+/* System Configuration 1 (0x058F) - 8 bits                     */
 /* ============================================================ */
 
 #define TPS43_EVENT_MODE            BIT(0)
@@ -121,44 +121,44 @@ extern "C" {
 
 
 /* ============================================================ */
-/* Конфигурация XY 0 (0x0669) - 8 бит */
+/* XY Configuration 0 (0x0669) - 8 bits                         */
 /* ============================================================ */
 
-#define TPS43_FLIP_X                BIT(0)      /* Отразить ось X */
-#define TPS43_FLIP_Y                BIT(1)      /* Отразить ось Y */
-#define TPS43_SWITCH_XY_AXIS        BIT(2)      /* Поменять местами оси X и Y */
+#define TPS43_FLIP_X                BIT(0)      /* Flip X axis */
+#define TPS43_FLIP_Y                BIT(1)      /* Flip Y axis */
+#define TPS43_SWITCH_XY_AXIS        BIT(2)      /* Swap X and Y axes */
 
 
 /* ============================================================ */
-/* События жестов 0 (0x000D) - 8 бит */
+/* Gesture Events 0 (0x000D) - 8 bits                           */
 /* ============================================================ */
 
-#define TPS43_SINGLE_TAP            BIT(0)      /* Обнаружено касание одним пальцем */
-#define TPS43_PRESS_AND_HOLD        BIT(1)      /* Обнаружено нажатие и удержание */
-#define TPS43_SWIPE_UP              BIT(2)      /* Проведение одним пальцем вверх */
-#define TPS43_SWIPE_DOWN            BIT(3)      /* Проведение одним пальцем вниз */
-#define TPS43_SWIPE_LEFT            BIT(4)      /* Проведение одним пальцем влево */
-#define TPS43_SWIPE_RIGHT           BIT(5)      /* Проведение одним пальцем вправо */
+#define TPS43_SINGLE_TAP            BIT(0)      /* Single-finger tap detected */
+#define TPS43_PRESS_AND_HOLD        BIT(1)      /* Press and hold detected */
+#define TPS43_SWIPE_UP              BIT(2)      /* Single-finger swipe up */
+#define TPS43_SWIPE_DOWN            BIT(3)      /* Single-finger swipe down */
+#define TPS43_SWIPE_LEFT            BIT(4)      /* Single-finger swipe left */
+#define TPS43_SWIPE_RIGHT           BIT(5)      /* Single-finger swipe right */
 
 /* ============================================================ */
-/* События жестов 1 (0x000E) - 8 бит */
+/* Gesture Events 1 (0x000E) - 8 bits                           */
 /* ============================================================ */
 
-#define TPS43_TWO_FINGER_TAP        BIT(0)      /* Касание двумя пальцами */
-#define TPS43_SCROLL                BIT(1)      /* Прокрутка вверх */
-#define TPS43_ZOOM                  BIT(2)      /* Жест масштабирования */
+#define TPS43_TWO_FINGER_TAP        BIT(0)      /* Two-finger tap */
+#define TPS43_SCROLL                BIT(1)      /* Scroll up */
+#define TPS43_ZOOM                  BIT(2)      /* Zoom gesture */
 
 /* ============================================================ */
-/* Настройки фильтра 0 (0x0632) - 8 бит */
+/* Filter Settings 0 (0x0632) - 8 bits                          */
 /* ============================================================ */
 
-#define TPS43_IIR_FILTER           BIT(0)      /* Фильтр IIR */
-#define TPS43_MAV_FILTER           BIT(1)      /* Фильтр MAV */
-#define TPS43_IIR_SELECT           BIT(2)      /* Выбор IIR */
-#define TPS43_ALP_COUNT_FILTER     BIT(3)      /* Фильтр подсчета ALP */
+#define TPS43_IIR_FILTER            BIT(0)      /* IIR filter */
+#define TPS43_MAV_FILTER            BIT(1)      /* MAV filter */
+#define TPS43_IIR_SELECT            BIT(2)      /* IIR select */
+#define TPS43_ALP_COUNT_FILTER      BIT(3)      /* ALP count filter */
 
 
-/* Окончание окна связи - ОБЯЗАТЕЛЬНО вызывать после каждого чтения (запись в недопустимый адрес 0xEEEE вызывает NACK) */
+/* End of communication window - MUST be called after every read (writing to an invalid address 0xEEEE causes a NACK) */
 #define TPS43_REG_END_COMM_WINDOW   0xEEEE
 
 struct tps43_config {
@@ -174,7 +174,7 @@ struct tps43_config {
     int16_t hold_time_ms;
     bool two_finger_tap;
     bool scroll;
-    bool swipes;            
+    bool swipes;          
     bool invert_x;
     bool invert_y;
     bool switch_xy;
@@ -221,7 +221,7 @@ struct tps43_drv_data {
     bool initialized;
     bool scroll_active;
     bool drag_active;
-    bool suspended;         
+    bool suspended;          
 
     /* Tap-then-hold drag state */
     int64_t last_tap_time;      /* uptime (ms) of the last single tap; 0 = none */
@@ -242,4 +242,3 @@ int tps43_set_sleep(const struct device *dev, bool sleep);
 #ifdef __cplusplus
 }
 #endif
-
